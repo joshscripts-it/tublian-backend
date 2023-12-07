@@ -46,11 +46,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get((req, res, next) => {
-  res
-    .status(200)
-    .json({ msg: "Welcome To Tublian Challenge Server!", status: 200 });
-});
 //@route
 app.use("/api", router);
 //@error middleware
