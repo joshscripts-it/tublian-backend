@@ -47,6 +47,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //@route
+app.get((req, res, next) => {
+  res
+    .status(200)
+    .json({ msg: "Welcome! Joshag Tublian Challenge Server.", status: 200 });
+});
+
 app.use("/api", router);
 //@error middleware
 app.use(errorHandler);
