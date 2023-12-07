@@ -47,7 +47,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //@route
-app.get((req, res, next) => {
+app.get("/", (req, res, next) => {
   res.status(200).json({
     msg: "Welcome! Joshag Tublian Challenge Server Section.",
     status: 200,
