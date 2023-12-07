@@ -24,7 +24,7 @@ const dbConn = async () => {
     // Connect the client to the server	(optional starting in v4.7)
     conn = await client.connect();
 
-    console.log("Connection to DB succeeded...->", conn.connection);
+    console.log("Connection to DB succeeded...->", conn.s.url);
   } catch (err) {
     console.log("Mongo Error: ", err.message);
   }
