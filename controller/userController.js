@@ -18,7 +18,7 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ statusCode: 4040, msg: "User Not Found" });
+      return res.status(404).json({ statusCode: 404, msg: "User Not Found" });
     }
 
     //@user found, validate passwd
