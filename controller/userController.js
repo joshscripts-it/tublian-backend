@@ -93,7 +93,7 @@ const register = async (req, res, next) => {
       updateAt: newUser.updatedAt,
     };
 
-    res.status(200).json({ statusCode: 200, user });
+    res.status(200).json({ statusCode: 200, msg: "Registeration Successful" });
   } catch (err) {
     throw err;
   }

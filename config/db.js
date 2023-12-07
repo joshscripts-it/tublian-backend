@@ -7,8 +7,6 @@ const connString =
 
 const dbConn = async () => {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
     await mongoose.connect(connString);
 
     console.log("Connection to DB succeeded...");

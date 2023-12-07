@@ -50,12 +50,15 @@ app.use(passport.session());
 app.get((req, res, next) => {
   res
     .status(200)
-    .json({ msg: "Welcome! Joshag Tublian Challenge Server.", status: 200 });
+    .json({
+      msg: "Welcome! Joshag Tublian Challenge Server Section.",
+      status: 200,
+    });
 });
 
-app.use("/api", router);
 //@error middleware
 app.use(errorHandler);
+app.use("/api", router);
 
 //connect Db
 dbConn();
