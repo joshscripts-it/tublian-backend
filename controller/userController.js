@@ -86,13 +86,6 @@ const register = async (req, res, next) => {
         .json({ statusCode: 500, msg: "Something went wrong" });
     }
 
-    const user = {
-      _id: newUser.id,
-      email: newUser.email,
-      createtedAt: newUser.createdAt,
-      updateAt: newUser.updatedAt,
-    };
-
     res.status(200).json({ statusCode: 200, msg: "Registeration Successful" });
   } catch (err) {
     throw err;

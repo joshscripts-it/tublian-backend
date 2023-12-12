@@ -14,9 +14,14 @@ const jwtStrategy = passport.use(
   new JwtStrategy(opts, async (jwt_payload, done) => {
     // console.log(jwt_payload);
     try {
+      if (!jwt_payload) {
+        return done(null, false, { msg: "Unauthorized", statusCode: 401 });
+      }
+
       const user = await User.findById({ _id: jwt_payload.id }).select(
         "-password"
       );
+
       if (!user) {
         return done(null, false, {
           message: "User doesn't exist",
