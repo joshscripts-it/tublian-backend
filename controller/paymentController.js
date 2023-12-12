@@ -1,9 +1,9 @@
 const stripe = require("stripe")(process.env.API_KEY);
 
 const payment = (req, res, next) => {
-  const { holder_name, cvv, email, amount, expiry_date } = req.body;
+  const { card_name, card_cvv, email, amount, expiry_date } = req.body;
 
-  if (!holder_name || !expiry_date || !cvv || !email || !amount)
+  if (!card_name || !expiry_date || !card_cvv || !email || !amount)
     return res.status(400).json({ msg: "Fill-in all fields", statusCode: 400 });
 
   const customer = { email };
