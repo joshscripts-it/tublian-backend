@@ -1,6 +1,7 @@
 const { hashSync, compareSync, genSaltSync } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/userModel");
+const redirectUrl = `https://tublian-challenge-vert.vercel.app/setup`;
 
 //log user in
 const login = async (req, res, next) => {
@@ -43,7 +44,7 @@ const login = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ msg: "Login successful", statusCode: 200, user: matchedUser });
+      .json({ msg: "Login Successful", statusCode: 200, user: matchedUser });
   } catch (err) {
     throw err;
   }
@@ -92,6 +93,13 @@ const register = async (req, res, next) => {
   }
 };
 
+//@google signin
+const googleSignin = (req, res, next) => {
+  const token = genToken(req.user.id);
+  // redirect user
+  res.redirect(`${redirectUrl}?token=${token}`);
+};
+
 //gen auth token
 const genToken = (id) => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
@@ -99,4 +107,4 @@ const genToken = (id) => {
   return token;
 };
 
-module.exports = { register, login };
+module.exports = { register, login, googleSignin };

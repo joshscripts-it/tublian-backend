@@ -1,4 +1,5 @@
 const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20");
 const { User } = require("../models/userModel");
 
 //Passport-Jwt config
@@ -34,6 +35,31 @@ const jwtStrategy = passport.use(
       throw err;
     }
   })
+);
+
+//@use google strategy
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/api/auth/google/redirect",
+    } /**config obj for google strat. */,
+    async (accessToken, refreshToken, profile, done) => {
+      //passport-google callback func
+      console.log(profile.emails[0].value);
+      try {
+        const user = await User.create({
+          googleId: profile?.id,
+          email: profile?.emails[0].value,
+        });
+
+        done(null, user);
+      } catch (err) {
+        done(null, false, { statusCode: 500, msg: err.message });
+      }
+    }
+  )
 );
 
 //serialize and deserialize user
