@@ -6,13 +6,17 @@ const {
   login,
   googleSignin,
 } = require("../controller/userController");
-const { payment } = require("../controller/paymentController");
+const {
+  payment,
+  pay_with_paystack,
+} = require("../controller/paymentController");
 
 //@login
 router.route("/login").post(login);
 router.route("/failure/redirect").get((req, res, next) => {
   res.send("Something went wrong. Try again later");
 });
+
 //@create account
 router.route("/account/create").post(register);
 //@google sign-in
@@ -24,10 +28,11 @@ router
   .route("/auth/google/redirect")
   .get(
     passport.authenticate("google", { failureRedirect: "/failure/redirect" }),
-    googleSignin
+    googleSignin,
   );
 
 //@payment route
 router.route("/pay").post(passport.authenticate("jwt"), payment);
+router.route("/pay_with_paystack").post(pay_with_paystack);
 
 module.exports = router;

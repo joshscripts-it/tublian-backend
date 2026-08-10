@@ -9,7 +9,7 @@ const login = async (req, res, next) => {
 
   if (!email || !password) {
     return res.status(400).json({
-      msg: "First and Last Name is marked required",
+      msg: "required field is missing",
       statusCode: 400,
     });
   }
@@ -19,7 +19,9 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ statusCode: 404, msg: "User Not Found" });
+      return res
+        .status(404)
+        .json({ statusCode: 404, msg: "user do not exist" });
     }
 
     //@user found, validate passwd
@@ -29,9 +31,14 @@ const login = async (req, res, next) => {
       //@
       return res
         .status(401)
-        .json({ statusCode: 401, msg: "Password do not match" });
+        .json({ statusCode: 401, msg: "password do not match" });
     }
+    //next
+    //step
+    //
+    //password does match
 
+    // gen auth token
     const token = genToken(user._id);
 
     const matchedUser = {
@@ -44,7 +51,7 @@ const login = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ msg: "Login Successful", statusCode: 200, user: matchedUser });
+      .json({ msg: "login succeeded", statusCode: 200, user: matchedUser });
   } catch (err) {
     throw err;
   }
@@ -59,7 +66,7 @@ const register = async (req, res, next) => {
   if (!email || !password) {
     return res.status(400).json({
       statusCode: 400,
-      msg: "Email and Password field is marked required",
+      msg: "some required field missing",
     });
   }
 
@@ -70,7 +77,7 @@ const register = async (req, res, next) => {
     if (isUserRegistered) {
       return res
         .status(400)
-        .json({ msg: "User already registered.", statusCode: 400 });
+        .json({ msg: "user already registered.", statusCode: 400 });
     }
 
     //@hash password
@@ -84,10 +91,10 @@ const register = async (req, res, next) => {
       //@something went wrong: user was not created
       return res
         .status(500)
-        .json({ statusCode: 500, msg: "Something went wrong" });
+        .json({ statusCode: 500, msg: "something went wrong" });
     }
 
-    res.status(200).json({ statusCode: 200, msg: "Registeration Successful" });
+    res.status(200).json({ statusCode: 200, msg: "registeration Succeeded" });
   } catch (err) {
     throw err;
   }

@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
 const connString =
-  process.env.NODE_ENV === "production"
-    ? process.env.MONGO_URI
-    : process.env.MONGO_LOCAL;
+  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/tublian_db";
 
 const dbConn = async () => {
   try {

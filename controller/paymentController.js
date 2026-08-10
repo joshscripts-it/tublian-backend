@@ -1,4 +1,7 @@
 const stripe = require("stripe")(process.env.API_KEY);
+const Paystack = require("@paystack/paystack-sdk");
+
+const paystack = new Paystack(process.env.PAYSTACK_KEY);
 
 const payment = (req, res, next) => {
   const { card_name, card_cvv, email, amount, expiry_date } = req.body;
@@ -29,4 +32,16 @@ const payment = (req, res, next) => {
     });
 };
 
-module.exports = { payment };
+const pay_with_paystack = (req, res, next) => {
+  const { email, amount } = req.body;
+
+  console.log("Loaded Paystack Key:", process.env.PAYSTACK_KEY);
+  console.log(email, amount);
+
+  paystack.transaction
+    .initialize({ email, amount: amount || 2000 })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
+};
+
+module.exports = { payment, pay_with_paystack };

@@ -56,7 +56,10 @@ passport.use(
 
         done(null, user);
       } catch (err) {
-        done(null, false, { statusCode: 500, msg: err.message });
+        done(null, false, {
+          statusCode: 500,
+          msg: err?.message || err?.msg || "something went wrong",
+        });
       }
     }
   )
